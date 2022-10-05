@@ -1,0 +1,37 @@
+#include <MX1508.h>
+
+
+MX1508 bodyMotor(6, 9); // Sets up an MX1508 controlled motor on PWM pins 6 and 9
+MX1508 mouthMotor(5, 3); // Sets up an MX1508 controlled motor on PWM pins 5 and 3
+
+int soundPin = A0; // Sound input
+
+int silence = 12; // Threshold for "silence". Anything below this level is ignored.
+int bodySpeed = 0; // body motor speed initialized to 0
+int soundVolume = 0; // variable to hold the analog audio value
+int fishState = 0; // variable to indicate the state Billy is in
+
+bool talking = false; //indicates whether the fish should be talking or not
+
+//these variables are for storing the current time, scheduling times for actions to end, and when the action took place
+long currentTime;
+long mouthActionTime;
+long bodyActionTime;
+long lastActionTime;
+
+void setup() {
+//make sure both motor speeds are set to zero
+  bodyMotor.setSpeed(0); 
+  mouthMotor.setSpeed(0);
+
+//input mode for sound pin
+  pinMode(soundPin, INPUT);
+
+  Serial.begin(9600);
+}
+
+void loop()
+{
+ soundVolume =  analogRead(soundPin);
+  Serial.println(soundVolume);  
+}
